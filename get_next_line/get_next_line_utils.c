@@ -6,15 +6,15 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:00:53 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/14 21:10:45 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:01:16 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	size_t	len;
+	int	len;
 
 	len = 0;
 	if (!str)

@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:38:15 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/16 13:55:19 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:01:32 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-size_t	ft_strlen(const char *str);
+int		ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
