@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:56:29 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/29 17:06:14 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:07:39 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int	validate_map(t_game *game)
 				"\033[31mError: invalid map walls!\033[0m\n"), 1);
 	if (check_map_duplicates(game) == 1)
 		return (ft_printf("%s",
-				"\033[31mError: duplicate/not enough chars in map!\033[0m\n"), 1);
+				"\033[31mError: duplicates/not enough chars in map!\033[0m\n"), 1);
 	return (0);
 }
 
-void set_game_dimensions(t_game *game, int line_count)
+void	set_game_dimensions(t_game *game, int line_count)
 {
 	game->map_width = ft_strlen(game->map[0]);
 	game->map_height = line_count;

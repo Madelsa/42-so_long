@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 07:18:48 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/29 17:21:55 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:49:50 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,29 +83,27 @@ int	check_map_walls(t_game *game)
 	return (0);
 }
 
-void	check_map_duplicates_rec(t_game *game)
+void	check_map_duplicates_rec(t_game *game, int i, int j)
 {
-	static int	i = 1;
-	static int	j = 0;
-
-	if (i == game->map_height - 1)
+	if (i == game->map_height - 1 || game->exit_count > 1 
+		|| game->player_count > 1)
 		return ;
 	if (game->map[i][j] != '\0')
 	{
 		if (game->map[i][j] == 'C')
 			game->coin_count++;
-		else if (game->map[i][j] == 'P')
+		else if (game->map[i][j] == 'P' && game->player_count < 1)
+		{
 			game->player_count++;
+			game->x = j;
+			game->y = i;
+		}
 		else if (game->map[i][j] == 'E')
 			game->exit_count++;
-		j++;
+		check_map_duplicates_rec(game, i, j + 1);
 	}
 	else
-	{
-		i++;
-		j = 0;
-	}
-	check_map_duplicates_rec(game);
+		check_map_duplicates_rec(game, i + 1, 0);
 }
 
 int	check_map_duplicates(t_game *game)
@@ -113,15 +111,20 @@ int	check_map_duplicates(t_game *game)
 	game->coin_count = 0;
 	game->player_count = 0;
 	game->exit_count = 0;
-
-	check_map_duplicates_rec(game);
+	check_map_duplicates_rec(game, 1, 0);
 	if (game->coin_count < 1 || game->player_count != 1 
 		|| game->exit_count != 1)
 		return (1);
 	return (0);
 }
 
-// int check_valid_path(t_game *game)
-// {
-
-// }
+int	check_valid_path(t_game game)
+{
+	if (game.x < 0 || game.x >= game.map_width || game.y < 0
+		|| game.y >= game.map_height 
+		|| game.map[game.x][game.y] != '0')
+		return (1);
+	
+	game.map[game.x][game.y] = 'T';
+	check_valid_path(game)
+}
