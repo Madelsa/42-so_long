@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:00:53 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/29 15:01:16 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/01 09:33:20 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_strlen(const char *str)
 {
-	int	len;
+	int	i;
 
-	len = 0;
+	i = 0;
 	if (!str)
 		return (0);
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	while (*(str + i))
+		i++;
+	return (i);
 }
 
 char	*ft_strdup(const char *src)

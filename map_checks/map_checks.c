@@ -6,12 +6,12 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 07:18:48 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/31 15:49:50 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:17:17 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./get_next_line/get_next_line.h"
-#include "so_long.h"
+#include "../get_next_line/get_next_line.h"
+#include "../so_long.h"
 
 int	check_map_invalid_chars(char **game_map)
 {
@@ -85,14 +85,14 @@ int	check_map_walls(t_game *game)
 
 void	check_map_duplicates_rec(t_game *game, int i, int j)
 {
-	if (i == game->map_height - 1 || game->exit_count > 1 
+	if (i == game->map_height - 1 || game->exit_count > 1
 		|| game->player_count > 1)
 		return ;
 	if (game->map[i][j] != '\0')
 	{
 		if (game->map[i][j] == 'C')
 			game->coin_count++;
-		else if (game->map[i][j] == 'P' && game->player_count < 1)
+		else if (game->map[i][j] == 'P')
 		{
 			game->player_count++;
 			game->x = j;
@@ -112,19 +112,96 @@ int	check_map_duplicates(t_game *game)
 	game->player_count = 0;
 	game->exit_count = 0;
 	check_map_duplicates_rec(game, 1, 0);
-	if (game->coin_count < 1 || game->player_count != 1 
+	if (game->coin_count < 1 || game->player_count != 1
 		|| game->exit_count != 1)
 		return (1);
 	return (0);
 }
 
-int	check_valid_path(t_game game)
+char **copy_map(t_game *game)
 {
-	if (game.x < 0 || game.x >= game.map_width || game.y < 0
-		|| game.y >= game.map_height 
-		|| game.map[game.x][game.y] != '0')
-		return (1);
-	
-	game.map[game.x][game.y] = 'T';
-	check_valid_path(game)
+	char	**map_copy;
+	int		i;
+
+	i = 0;
+	map_copy = (char **)malloc(game->map_height * sizeof(char *) + 1);
+	if (map_copy == NULL)
+		return (NULL);
+	while (i < game->map_height)
+	{
+		map_copy[i] = ft_strdup(game->map[i]);
+		i++;
+	}
+	map_copy[i] = NULL;
+	return (map_copy);
+}
+
+void	print_map(char **map)
+{
+	while (*map)
+	{
+		ft_printf("%s\n", *map);
+		map++;
+	}
+}
+
+void free_map(char **map_copy, int map_height)
+{
+	int	i;
+
+	i = 0;
+	while (i < map_height)
+	{
+		free(map_copy[i]);
+		i++;
+	}
+	free(map_copy);
+}
+
+int	check_valid_path_rec(t_game *game, int x, int y)
+{
+	static int	coins_collected = 0;
+	static int	exit_found = 0;
+
+	if (game->map[y][x] == '0' || game->map[y][x] == 'E' 
+		|| game->map[y][x] == 'C')
+	{
+		if (game->map[y][x] == 'C')
+			coins_collected++;
+		if (game->map[y][x] == 'E')
+			exit_found = 1;
+		game->map[y][x] = 'X';
+		if (x != 1)
+			check_valid_path_rec(game, x - 1, y);
+		if (x < game->map_width)
+			check_valid_path_rec(game, x + 1, y);
+		if (y != 1)
+			check_valid_path_rec(game, x, y - 1);
+		if (y < game->map_height)
+			check_valid_path_rec(game, x, y + 1);
+	}
+	if (coins_collected == game->coin_count && exit_found == 1)
+		return (0);
+	return (1);
+}
+
+int	check_valid_path(t_game *game)
+{
+	int		x;
+	int		y;
+	int		map_valid;
+	char	**map_copy;
+
+	x = game->x;
+	y = game->y;
+	map_copy = copy_map(game);
+	if (game->map[y][x] == 'P')
+		game->map[y][x] = '0';
+	map_valid = check_valid_path_rec(game, x, y);
+	print_map(game->map);
+	write(1, "\n", 1);
+	print_map(map_copy);
+	game->map = map_copy;
+	// free_map(map_copy, game->map_height);
+	return (map_valid);
 }

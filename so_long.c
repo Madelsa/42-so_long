@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:56:29 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/31 16:07:39 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:16:40 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_list	*store_map_list(int fd)
 		ft_lstadd_back(&node, new_node);
 		line = get_next_line(fd);
 	}
+	free(line);
 	return (node);
 }
 
@@ -66,16 +67,19 @@ int	validate_map(t_game *game)
 {
 	if (check_map_dimensions(game) == 1)
 		return (ft_printf("%s",
-				"\033[31mError: invalid map dimensions!\033[0m\n"), 1);
+				"\033[31mError\ninvalid map dimensions!\033[0m\n"), 1);
 	if (check_map_invalid_chars(game->map) == 1)
 		return (ft_printf("%s",
-				"\033[31mError: invalid map char input!\033[0m\n"), 1);
+				"\033[31mError\ninvalid map char input!\033[0m\n"), 1);
 	if (check_map_walls(game) == 1)
 		return (ft_printf("%s",
-				"\033[31mError: invalid map walls!\033[0m\n"), 1);
+				"\033[31mError\ninvalid map walls!\033[0m\n"), 1);
 	if (check_map_duplicates(game) == 1)
 		return (ft_printf("%s",
-				"\033[31mError: duplicates/not enough chars in map!\033[0m\n"), 1);
+				"\033[31mError\nduplicates/missing chars in map!\033[0m\n"), 1);
+	if (check_valid_path(game) == 1)
+		return (ft_printf("%s",
+				"\033[31mError\ncan't exit map/collect all coins!\033[0m\n"), 1);
 	return (0);
 }
 
@@ -92,9 +96,9 @@ int	main(void)
 	t_game	game;
 	int		line_count;
 
-	fd = open("map.ber", O_RDONLY);
+	fd = open("./maps/map.ber", O_RDONLY);
 	if (fd < 0)
-		return (ft_printf("\033[31mError: invalid file descriptor\033[0m\n"), 0);
+		return (ft_printf("\033[31mError\ninvalid file descriptor!\033[0m\n"), 0);
 	map_list = store_map_list(fd);
 	line_count = get_map_lines_count(&map_list);
 	game.map = malloc(sizeof(char **) * line_count + 1);
@@ -102,5 +106,7 @@ int	main(void)
 	copy_map_to_array(&map_list, &game, line_count);
 	set_game_dimensions(&game, line_count);
 	validate_map(&game);
+	create_window(&game);
+	free_map(game.map, game.map_height);
 	return (0);
 }

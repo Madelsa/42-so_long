@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 18:24:38 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/08/29 16:49:28 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:32:31 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,16 @@ typedef struct s_game
 	int				coin_count;
 	int				exit_count;
 	int				player_count;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*textures[5];
+	void			*img_ptr;
 }					t_game;
 
 char				*ft_strchr(const char *str, int c);
+int					check_valid_path(t_game *game);
+void				print_map(char **map);
+int					check_valid_path_rec(t_game *game, int x, int y);
 int					check_map_invalid_chars(char **game_map);
 int					check_map_dimensions(t_game *game_map);
 int					check_map_walls(t_game *game);
@@ -46,4 +53,6 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 char				*ft_strtrim(char const *s1, char const *set);
 int					check_map_duplicates(t_game *game);
 t_list				*store_map_list(int fd);
+void				free_map(char **map_copy, int map_height);
+int					create_window(t_game *game);
 #endif

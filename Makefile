@@ -6,12 +6,12 @@
 #    By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/22 14:03:21 by mabdelsa          #+#    #+#              #
-#    Updated: 2023/08/28 12:48:17 by mabdelsa         ###   ########.fr        #
+#    Updated: 2023/09/01 15:36:30 by mabdelsa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = so_long.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c\
-		map_checks.c utils.c
+		./map_checks/map_checks.c so_long_utils.c ./map_rendering/parse_map.c\
 
 PRINTF_P = ./ft_printf/
 PRINTF_AR = ./ft_printf/libftprintf.a
