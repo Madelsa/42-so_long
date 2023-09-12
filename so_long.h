@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 18:24:38 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/12 22:39:24 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:57:01 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,12 @@ t_list		*store_map_list(int fd);
 void		free_map(char **map_copy, int map_height);
 int			create_window(t_game *game);
 char		**copy_map(t_game *game);
-void		test(t_game *game, int *img_width, int *img_height);
-int			perform_action(int keycode, t_game *game, int *img_width,
-				int *img_height);
-int			put_image(t_game *game, int *img_width, int *img_height);
-int			render_map(t_game *game, int *img_width, int *img_height);
-int			move_right(t_game *game, int *img_width, int *img_height);
-int			move_left(t_game *game, int *img_width, int *img_height);
-int			move_up(t_game *game, int *img_width, int *img_height);
-int			move_down(t_game *game, int *img_width, int *img_height);
+void		test(t_game *game);
+int			perform_action(int keycode, t_game *game);
+int			put_image(t_game *game);
+int			render_map(t_game *game);
+int			move_right(t_game *game);
+int			move_left(t_game *game);
+int			move_up(t_game *game);
+int			move_down(t_game *game);
 #endif
