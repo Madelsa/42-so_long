@@ -6,11 +6,10 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 07:18:48 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/01 16:17:17 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:09:35 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../get_next_line/get_next_line.h"
 #include "../so_long.h"
 
 int	check_map_invalid_chars(char **game_map)
@@ -95,8 +94,8 @@ void	check_map_duplicates_rec(t_game *game, int i, int j)
 		else if (game->map[i][j] == 'P')
 		{
 			game->player_count++;
-			game->x = j;
-			game->y = i;
+			game->player_x = j;
+			game->player_y = i;
 		}
 		else if (game->map[i][j] == 'E')
 			game->exit_count++;
@@ -116,46 +115,6 @@ int	check_map_duplicates(t_game *game)
 		|| game->exit_count != 1)
 		return (1);
 	return (0);
-}
-
-char **copy_map(t_game *game)
-{
-	char	**map_copy;
-	int		i;
-
-	i = 0;
-	map_copy = (char **)malloc(game->map_height * sizeof(char *) + 1);
-	if (map_copy == NULL)
-		return (NULL);
-	while (i < game->map_height)
-	{
-		map_copy[i] = ft_strdup(game->map[i]);
-		i++;
-	}
-	map_copy[i] = NULL;
-	return (map_copy);
-}
-
-void	print_map(char **map)
-{
-	while (*map)
-	{
-		ft_printf("%s\n", *map);
-		map++;
-	}
-}
-
-void free_map(char **map_copy, int map_height)
-{
-	int	i;
-
-	i = 0;
-	while (i < map_height)
-	{
-		free(map_copy[i]);
-		i++;
-	}
-	free(map_copy);
 }
 
 int	check_valid_path_rec(t_game *game, int x, int y)
@@ -192,16 +151,13 @@ int	check_valid_path(t_game *game)
 	int		map_valid;
 	char	**map_copy;
 
-	x = game->x;
-	y = game->y;
+	x = game->player_x;
+	y = game->player_y;
 	map_copy = copy_map(game);
-	if (game->map[y][x] == 'P')
-		game->map[y][x] = '0';
+	game->map[y][x] = '0';
 	map_valid = check_valid_path_rec(game, x, y);
 	print_map(game->map);
-	write(1, "\n", 1);
 	print_map(map_copy);
 	game->map = map_copy;
-	// free_map(map_copy, game->map_height);
 	return (map_valid);
 }

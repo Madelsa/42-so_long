@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:56:29 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/01 16:16:40 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:09:07 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(void)
 	t_game	game;
 	int		line_count;
 
-	fd = open("./maps/map.ber", O_RDONLY);
+	fd = open("./maps/map1.ber", O_RDONLY);
 	if (fd < 0)
 		return (ft_printf("\033[31mError\ninvalid file descriptor!\033[0m\n"), 0);
 	map_list = store_map_list(fd);
@@ -105,7 +105,8 @@ int	main(void)
 	game.map[line_count] = NULL;
 	copy_map_to_array(&map_list, &game, line_count);
 	set_game_dimensions(&game, line_count);
-	validate_map(&game);
+	if (validate_map(&game) == 1)
+		return (1);
 	create_window(&game);
 	free_map(game.map, game.map_height);
 	return (0);
