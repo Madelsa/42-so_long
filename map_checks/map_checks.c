@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 07:18:48 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/12 14:09:35 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/13 13:39:02 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	check_map_duplicates_rec(t_game *game, int i, int j)
 	if (game->map[i][j] != '\0')
 	{
 		if (game->map[i][j] == 'C')
-			game->coin_count++;
+			game->total_coin_count++;
 		else if (game->map[i][j] == 'P')
 		{
 			game->player_count++;
@@ -98,7 +98,11 @@ void	check_map_duplicates_rec(t_game *game, int i, int j)
 			game->player_y = i;
 		}
 		else if (game->map[i][j] == 'E')
+		{
 			game->exit_count++;
+			game->exit_x = j;
+			game->exit_y = i;
+		}
 		check_map_duplicates_rec(game, i, j + 1);
 	}
 	else
@@ -107,11 +111,11 @@ void	check_map_duplicates_rec(t_game *game, int i, int j)
 
 int	check_map_duplicates(t_game *game)
 {
-	game->coin_count = 0;
+	game->total_coin_count = 0;
 	game->player_count = 0;
 	game->exit_count = 0;
 	check_map_duplicates_rec(game, 1, 0);
-	if (game->coin_count < 1 || game->player_count != 1
+	if (game->total_coin_count < 1 || game->player_count != 1
 		|| game->exit_count != 1)
 		return (1);
 	return (0);
@@ -139,7 +143,7 @@ int	check_valid_path_rec(t_game *game, int x, int y)
 		if (y < game->map_height)
 			check_valid_path_rec(game, x, y + 1);
 	}
-	if (coins_collected == game->coin_count && exit_found == 1)
+	if (coins_collected == game->total_coin_count && exit_found == 1)
 		return (0);
 	return (1);
 }

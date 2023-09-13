@@ -6,12 +6,12 @@
 #    By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/22 14:03:21 by mabdelsa          #+#    #+#              #
-#    Updated: 2023/09/12 18:58:55 by mabdelsa         ###   ########.fr        #
+#    Updated: 2023/09/13 13:01:39 by mabdelsa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC	=	so_long.c ./map_checks/map_checks.c ./map_rendering/render_map.c ./map_checks/create_map_copy.c \
-		./move_player/move_player.c
+		./move_player/move_player.c ./map_checks/get_original_map.c
 
 NAME = so_long
 AR = ar rs

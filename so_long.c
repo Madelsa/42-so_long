@@ -6,62 +6,11 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:56:29 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/12 23:33:08 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/13 13:07:13 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-t_list	*store_map_list(int fd)
-{
-	t_list	*node;
-	char	*line;
-	t_list	*new_node;
-
-	node = NULL;
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		line = ft_strtrim(line, "\n");
-		new_node = ft_lstnew(line);
-		if (new_node == NULL)
-			return (ft_lstclear(&node, free), NULL);
-		ft_lstadd_back(&node, new_node);
-		line = get_next_line(fd);
-	}
-	free(line);
-	return (node);
-}
-
-int	get_map_lines_count(t_list **node)
-{
-	t_list	*current;
-	int		line_count;
-
-	line_count = 0;
-	current = *node;
-	while (current != NULL)
-	{
-		line_count++;
-		current = current->next;
-	}
-	return (line_count);
-}
-
-void	copy_map_to_array(t_list **map_list, t_game *game, int line_count)
-{
-	t_list	*current;
-	int		i;
-
-	current = *map_list;
-	i = 0;
-	while (i < line_count)
-	{
-		game->map[i] = ft_strdup(current->content);
-		i++;
-		current = current->next;
-	}
-}
 
 int	validate_map(t_game *game)
 {
@@ -83,12 +32,6 @@ int	validate_map(t_game *game)
 	return (0);
 }
 
-void	set_game_dimensions(t_game *game, int line_count)
-{
-	game->map_width = ft_strlen(game->map[0]);
-	game->map_height = line_count;
-}
-
 int	main(void)
 {
 	int		fd;
@@ -102,12 +45,14 @@ int	main(void)
 	map_list = store_map_list(fd);
 	line_count = get_map_lines_count(&map_list);
 	game.map = malloc(sizeof(char **) * line_count + 1);
+	if (game.map == NULL)
+		return (1);
 	game.map[line_count] = NULL;
 	copy_map_to_array(&map_list, &game, line_count);
 	set_game_dimensions(&game, line_count);
-	if (validate_map(&game) == 1)
+	if (validate_map(&game) == 1 || create_window(&game) == 1)
 		return (1);
-	create_window(&game);
+	initialize_movements(&game);
 	free_map(game.map, game.map_height);
 	return (0);
 }

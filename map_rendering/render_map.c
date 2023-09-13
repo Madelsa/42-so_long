@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:14:27 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/12 23:00:17 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/13 13:54:08 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ int	put_image(t_game *game)
 	else if (game->map[game->y][game->x] == '1')
 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->textures[3],
 			game->x * (game->img_width), game->y * (game->img_height));
-	if (game->map[game->y][game->x] == 'E')
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->textures[4],
-			game->x * (game->img_width), game->y * (game->img_height));
 	else if (game->map[game->y][game->x] == 'C')
 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->textures[5],
 			game->x * (game->img_width), game->y * (game->img_height));
@@ -78,8 +75,17 @@ int	render_map(t_game *game)
 		game->x = 0;
 		game->y++;
 	}
-	test(game);
 	return (0);
+}
+
+void	initialize_movements(t_game *game)
+{
+	game->x = game->player_x;
+	game->y = game->player_y;
+	game->current_coin_count = 0;
+	ft_printf("player y: %d player x: %d\n", game->y, game->x);
+	mlx_hook(game->win_ptr, 2, 1L << 0, perform_action, game);
+	mlx_loop(game->mlx_ptr);
 }
 
 int	create_window(t_game *game)
@@ -89,12 +95,11 @@ int	create_window(t_game *game)
 	game->mlx_ptr = mlx_init();
 	if (game->mlx_ptr == NULL)
 		return (free(game->mlx_ptr), 1);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->map_width * game->img_width,
-			game->map_height * game->img_height, "so_long");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->map_width * 
+			game->img_width, game->map_height * game->img_height, "so_long");
 	if (game->win_ptr == NULL)
 		return (free(game->win_ptr), 1);
 	assign_images(game);
-	// ft_printf("width: %d height: %d\n", img_width, img_height);
 	render_map(game);
 	return (0);
 }
