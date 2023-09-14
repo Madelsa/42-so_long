@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:14:27 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/13 13:54:08 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:12:28 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	assign_images(t_game *game)
 	game->textures[4] = mlx_xpm_file_to_image(game->mlx_ptr,
 			"./textures/exit.xpm", &game->img_width, &game->img_height);
 	game->textures[5] = mlx_xpm_file_to_image(game->mlx_ptr,
-			"./textures/gem.xpm", &game->img_width, &game->img_height);
+			"./textures/carrot.xpm", &game->img_width, &game->img_height);
 	game->textures[6] = mlx_xpm_file_to_image(game->mlx_ptr,
-			"./textures/player.xpm", &game->img_width, &game->img_height);
+			"./textures/BugsBunny.xpm", &game->img_width, &game->img_height);
 	// if (game->img_ptr == NULL)
 	// {
 	// 	perror("Failed to load image");
@@ -83,6 +83,7 @@ void	initialize_movements(t_game *game)
 	game->x = game->player_x;
 	game->y = game->player_y;
 	game->current_coin_count = 0;
+	game->movement_count = 0;
 	ft_printf("player y: %d player x: %d\n", game->y, game->x);
 	mlx_hook(game->win_ptr, 2, 1L << 0, perform_action, game);
 	mlx_loop(game->mlx_ptr);

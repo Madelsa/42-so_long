@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 18:24:38 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/13 13:54:04 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:43:18 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_game
 	void	*img_ptr;
 	int		player_x;
 	int		player_y;
+	int		movement_count;
 }			t_game;
 
 int			check_valid_path(t_game *game);
