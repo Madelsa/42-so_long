@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:56:29 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/14 16:00:05 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:08:21 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	validate_map(t_game *game)
 	return (0);
 }
 
-int	validate_file(char *av[1])
+int	validate_file(char *av)
 {
-	if (ft_strncmp(ft_substr(av[1], ft_strlen(av[1]) - 4, 4), ".ber", 5) != 0)
+	if (ft_strncmp(ft_substr(av, ft_strlen(av) - 4, 4), ".ber", 5) != 0)
 		return (ft_printf("%s",
 				"\033[31mError\nInvalid map extension!\033[0m\n"), 1);
 	return (0);
@@ -48,7 +48,7 @@ int	main(int ac, char **av)
 	int		line_count;
 
 	(void)ac;
-	if (validate_file(&av[1]) == 1)
+	if (validate_file(av[1]) == 1)
 		return (1);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
