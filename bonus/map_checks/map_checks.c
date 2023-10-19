@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 07:18:48 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/16 15:46:02 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:38:28 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_map_invalid_chars(char **game_map)
 
 int	check_map_dimensions(t_game *game)
 {
-	int				i;
+	int	i;
 
 	i = 1;
 	if (game->map_width <= 1 || game->map_height <= 1)

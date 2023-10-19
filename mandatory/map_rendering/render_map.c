@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:14:27 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/16 15:39:07 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:07:19 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	assign_images(t_game *game)
 	if (game->textures[0] == NULL || game->textures[1] == NULL
 		|| game->textures[2] == NULL || game->textures[3] == NULL
 		|| game->textures[4] == NULL || game->textures[5] == NULL)
-		return (1);
+		destroy_window(game);
 	return (0);
 }
 
-int	put_image(t_game *game)
+void	put_image(t_game *game)
 {
 	if (game->current_coin_count == game->total_coin_count)
 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->textures[3],
@@ -56,7 +56,6 @@ int	put_image(t_game *game)
 	else if (game->map[game->y][game->x] == 'P')
 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->textures[5],
 			game->x * (game->img_width), game->y * (game->img_height));
-	return (0);
 }
 
 void	render_map(t_game *game)
@@ -85,6 +84,7 @@ void	initialize_movements(t_game *game)
 	game->y = game->player_y;
 	game->movement_count = 0;
 	game->message_printed = 0;
+	game->exit_placed = 0;
 	mlx_hook(game->win_ptr, 17, 1L << 17, destroy_window, game);
 	mlx_hook(game->win_ptr, 2, 1L << 0, perform_action, game);
 	mlx_loop(game->mlx_ptr);

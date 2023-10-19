@@ -12,17 +12,17 @@
 
 #include "libft.h"
 
-static int	process_digits(const char *str, int sign)
+static int	process_digits(const char *str, int sign, int i)
 {
 	long	result;
 	long	prev;
 
 	result = 0;
 	prev = 0;
-	while (*str >= '0' && *str <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
 		prev = result;
-		result = result * 10 + *str++ - '0';
+		result = result * 10 + str[i++] - '0';
 		if (prev > result)
 		{
 			if (sign < 0)
@@ -37,19 +37,21 @@ static int	process_digits(const char *str, int sign)
 int	ft_atoi(const char *str)
 {
 	int		sign;
+	int		i;
 
-	if (!str)
+	if (str == NULL)
 		return (0);
 	sign = 1;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-' || *str == '+')
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (*str == '-')
+		if (str[i] == '-')
 			sign *= -1;
-		str++;
+		i++;
 	}
-	while (*str == '0')
-		str++;
-	return (process_digits(str, sign));
+	while (str[i] == '0')
+		i++;
+	return (process_digits(str, sign, i));
 }

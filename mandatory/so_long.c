@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:56:29 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/16 15:14:29 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:10:54 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	validate_map(t_game *game)
 
 int	validate_file(char *av)
 {
-	if (ft_strncmp(ft_substr(av, ft_strlen(av) - 4, 4), ".ber", 5) != 0)
+	if (ft_strncmp(ft_substr(av, ft_strlen(av) - 4, 4), ".ber", 4) != 0)
 		return (ft_printf("%s",
 				"\033[31mError\nInvalid map extension!\033[0m\n"), 1);
 	return (0);
@@ -50,19 +50,20 @@ int	main(int ac, char **av)
 	t_game	game;
 	int		line_count;
 
-	(void)ac;
+	if (ac > 2)
+		return (1);
 	if (validate_file(av[1]) == 1)
 		return (1);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		return (ft_printf("\033[31mError\nUnable to open the file!\033[0m\n"), 0);
+		return (ft_printf("\033[31mError\nUnable to open the file!\033[0m\n"), 1);
 	map_list = store_map_list(fd);
-	line_count = get_map_lines_count(&map_list);
-	game.map = malloc(sizeof(char **) * line_count + 1);
+	line_count = get_map_lines_count(map_list);
+	game.map = (char **)malloc(sizeof(char **) * line_count + 1);
 	if (game.map == NULL)
 		return (1);
 	game.map[line_count] = NULL;
-	copy_map_to_array(&map_list, &game, line_count);
+	copy_map_to_array(map_list, &game, line_count);
 	set_game_dimensions(&game, line_count);
 	if (validate_map(&game) == 1 || create_window(&game) == 1)
 		return (1);

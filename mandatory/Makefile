@@ -6,7 +6,7 @@
 #    By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/22 14:03:21 by mabdelsa          #+#    #+#              #
-#    Updated: 2023/09/16 15:08:52 by mabdelsa         ###   ########.fr        #
+#    Updated: 2023/10/19 15:21:38 by mabdelsa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,20 +24,27 @@ MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 LIBFT_P = ./libft/
 LIBFT_AR = ./libft/libft.a
 
+MLX_P = ./mlx/
+MLX_AR = ./mlx/libmlx.a
+
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(OBJS): %.o: %.c
-	$(CC) $(CFLAGS) -I ./mlx -c $< -o $@
+	$(CC) $(CFLAGS) -I $(MLX_P) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT_AR)
-	$(CC) $(OBJS) $(MLX_FLAGS) $(LIBFT_AR) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT_AR) $(MLX_AR)
+	$(CC) $(OBJS) $(MLX_FLAGS) $(MLX_AR) $(LIBFT_AR) -o $(NAME)
 
 $(LIBFT_AR):
 	make -C $(LIBFT_P)
 
+$(MLX_AR):
+	make -C $(MLX_P)
+
 clean:
+	make -C $(MLX_P) clean
 	make -C $(LIBFT_P) clean
 	$(RM) $(OBJS)
 

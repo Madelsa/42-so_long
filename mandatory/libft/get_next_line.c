@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:50:13 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/10 15:31:45 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:53:06 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*read_buffer(int fd, char *stored)
 	char	*buff;
 	int		chars_read;
 
-	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (buff == NULL)
 		return (NULL);
 	chars_read = 1;

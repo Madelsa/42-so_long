@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:46:14 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/16 16:03:39 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:56:48 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,128 +14,76 @@
 
 void	move_right(t_game *game)
 {
-	ft_printf("Movement count: %d\n", ++game->movement_count);
+	game->player_status = 1;
+	game->movement_count++;
+	display_movement_count(game);
 	game->map[game->exit_y][game->exit_x] = 'E';
-	if (game->map[game->y][game->x + 1] == 'C')
-		game->current_coin_count++;
-	if (game->current_coin_count == game->total_coin_count)
-		put_image(game);
-	if (game->map[game->y][game->x + 1] == 'M')
-	{
-		ft_printf("%s", "\033[31mYou got caught by elmer!\033[0m\n");
-		destroy_window(game);
-	}
-	if (game->current_coin_count == game->total_coin_count
-		&& game->map[game->y][game->x + 1] == 'E')
-	{
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-		exit(0);
-	}
+	right_event(game);
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->x++;
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->map[game->y][game->x] = 'P';
-	put_image(game);
+	put_anim_move_right(game);
 	return ;
 }
 
 void	move_left(t_game *game)
 {
-	ft_printf("Movement count: %d\n", ++game->movement_count);
+	game->player_status = 2;
+	game->movement_count++;
+	display_movement_count(game);
 	game->map[game->exit_y][game->exit_x] = 'E';
-	if (game->map[game->y][game->x - 1] == 'C')
-		game->current_coin_count++;
-	if (game->current_coin_count == game->total_coin_count)
-		put_image(game);
-	if (game->map[game->y][game->x - 1] == 'M')
-	{
-		ft_printf("%s", "\033[31mYou got caught by elmer!\033[0m\n");
-		destroy_window(game);
-	}
-	if (game->current_coin_count == game->total_coin_count
-		&& game->map[game->y][game->x - 1] == 'E')
-	{
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-		exit(0);
-	}
+	left_event(game);
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->x--;
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->map[game->y][game->x] = 'P';
-	put_image(game);
+	put_anim_move_left(game);
 	return ;
 }
 
 void	move_up(t_game *game)
 {
-	ft_printf("Movement count: %d\n", ++game->movement_count);
+	game->player_status = 1;
+	game->movement_count++;
+	display_movement_count(game);
 	game->map[game->exit_y][game->exit_x] = 'E';
-	if (game->map[game->y - 1][game->x] == 'C')
-		game->current_coin_count++;
-	if (game->current_coin_count == game->total_coin_count)
-		put_image(game);
-	if (game->map[game->y - 1][game->x] == 'M')
-	{
-		ft_printf("%s", "\033[31mYou got caught by elmer!\033[0m\n");
-		destroy_window(game);
-	}
-	if (game->current_coin_count == game->total_coin_count
-		&& game->map[game->y - 1][game->x] == 'E')
-	{
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-		exit(0);
-	}
+	up_event(game);
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->y--;
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->map[game->y][game->x] = 'P';
-	put_image(game);
+	put_anim_move_right(game);
 	return ;
 }
 
 void	move_down(t_game *game)
 {
-	ft_printf("Movement count: %d\n", ++game->movement_count);
+	game->player_status = 2;
+	game->movement_count++;
+	display_movement_count(game);
 	game->map[game->exit_y][game->exit_x] = 'E';
-	if (game->map[game->y + 1][game->x] == 'C')
-		game->current_coin_count++;
-	if (game->current_coin_count == game->total_coin_count)
-		put_image(game);
-	if (game->map[game->y + 1][game->x] == 'M')
-	{
-		ft_printf("%s", "\033[31mYou got caught by elmer!\033[0m\n");
-		destroy_window(game);
-	}
-	if (game->current_coin_count == game->total_coin_count
-		&& game->map[game->y + 1][game->x] == 'E')
-	{
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-		exit(0);
-	}
+	down_event(game);
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->y++;
 	game->map[game->y][game->x] = '0';
 	put_image(game);
 	game->map[game->y][game->x] = 'P';
-	put_image(game);
+	put_anim_move_left(game);
 	return ;
 }
 
 int	perform_action(int keycode, t_game *game)
 {
 	if (keycode == 53)
-	{
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-		free_maps(game, game->map_height);
-		exit(0);
-	}
+		destroy_window(game);
 	else if ((keycode == 2 || keycode == 124) 
 		&& game->map[game->y][game->x + 1] != '1')
 		move_right(game);
