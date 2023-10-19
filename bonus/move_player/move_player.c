@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:46:14 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/10/19 11:56:48 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:29:58 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	perform_action(int keycode, t_game *game)
 		&& game->message_printed == 0)
 	{
 		game->message_printed = 1;
-		printf("\x1b[32mAll carrots collected, exit is now open!\x1b[0m\n");
+		ft_printf("\x1b[32mAll carrots collected, exit is now open!\x1b[0m\n");
 	}
 	return (0);
 }
