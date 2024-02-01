@@ -6,7 +6,7 @@
 /*   By: mabdelsa <mabdelsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 13:02:11 by mabdelsa          #+#    #+#             */
-/*   Updated: 2023/09/18 13:44:10 by mabdelsa         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:09:19 by mabdelsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_valid_path_rec(t_game *game, int x, int y)
 	static int	exit_found = 0;
 
 	if (game->mapped_map[y][x] == '0' || game->mapped_map[y][x] == 'E'
-		|| game->mapped_map[y][x] == 'C' || game->mapped_map[y][x] == 'M')
+		|| game->mapped_map[y][x] == 'C')
 	{
 		if (game->mapped_map[y][x] == 'C')
 			coins_collected++;
