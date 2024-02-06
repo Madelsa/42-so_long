@@ -1,4 +1,4 @@
-# 42 So_long Project
+# 42 So_long
 
 So_long is a graphical project at 42 where you will have to create a simple game using the minilibx, a basic library for graphical programming. The project involves creating a game scenario with walls, collectibles, an exit, and a player character. The player has to navigate through the map, collecting items and reaching the exit to win the game. The bonus part of the project allows you to enhance the gameplay or add additional features beyond the mandatory requirements, such as sprite animations.
 
