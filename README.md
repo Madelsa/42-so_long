@@ -21,7 +21,7 @@ So_long is a project that introduces students to the basics of graphical program
 
 ## Preview
 
-Here is a preview of the game for the mandatory and the bonus parts respectively:
+Here's a preview of the game for the mandatory and the bonus parts respectively:
 
 ### Mandatory preview
 ![Mandatory](https://github.com/Madelsa/42-so_long/blob/main/Mandatory.gif)
